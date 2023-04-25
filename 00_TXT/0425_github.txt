@@ -1,0 +1,9 @@
+★gitignore.io★
+https://www.toptal.com/developers/gitignore/
+	-.gitignore 프로젝트마다 있어야함
+	- 깃허브에 불필요한 파일들 무시
+
+★github★
+1) 깃허브데탑용 다운로드
+2) file > new repository > 이름 java-workspace, 만들어질 디렉토리선택(:D\git-hub)
+3) 폴더에 데이터 옮기면 commit → publish
