@@ -137,7 +137,7 @@ public class MemberDao {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JDBC","JDBC");
 			stmt = conn.createStatement();
-			rset = stmt.executeQuery(sql); // sql에 데이터 1건만 전달
+			rset = stmt.executeQuery(sql);
 			
 			if(rset.next()) {
 				m = new Member();
@@ -173,16 +173,13 @@ public class MemberDao {
 				e.printStackTrace();
 			}
 		}
+		
+		
 		return m;
 	}	
 	
-	
-	
 	public ArrayList<Member> selectByUserName(String userName) {
 		ArrayList<Member> list = new ArrayList<>();
-		
-		//키워드로 검색 → 여러명 조회될 수 있음 : Array 사용 
-		
 		
 		Connection conn = null;
 		Statement  stmt = null;
@@ -194,10 +191,10 @@ public class MemberDao {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JDBC","JDBC");
 			stmt = conn.createStatement();
-			rset = stmt.executeQuery(sql); // sql에 데이터 1건만 전달
+			rset = stmt.executeQuery(sql);
 			
 			while(rset.next()) {
-				Member m  = new Member();
+				Member m = new Member();
 				
 				// rset에서 user_no컬럼을 읽어서 m객체의 setter(setUserNo)를 이용하여 입력
 				m.setUserNo(rset.getInt("user_no"));  
@@ -231,7 +228,56 @@ public class MemberDao {
 				e.printStackTrace();
 			}
 		}
+		
+				
 		return list;
+	}
+	
+	// Controller에서 요청하는 회원정보 변경을 수행하는 메서드
+	public int updateMember(Member m) {
+		int result = 0;
+
+		Connection conn = null;
+		Statement  stmt = null;
+		
+		String sql = "UPDATE MEMBER "
+				+       "SET USER_PWD = '" + m.getUserPwd() +"',"
+				+       "    EMAIL = '" + m.getEmail() +"',"
+				+       "    PHONE = '" + m.getPhone() +"',"
+				+       "    ADDRESS = '" + m.getAddress() +"'"
+				+     "WHERE USER_ID = '" + m.getUserId() +"'";
+		
+		System.out.println(sql);
+				
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JDBC","JDBC");
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+			
+			if(result > 0) {  // 성공
+				conn.commit();
+			}else {           // 실패
+				conn.rollback();
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
 	}
 	
 }
