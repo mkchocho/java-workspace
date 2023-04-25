@@ -97,12 +97,18 @@ public class MemberController {
 			new MainMenu().displaySuccess("성공적으로 변경되었습니다.");
 		} else { //실패
 			new MainMenu().displayFail("회원정보 변경에 실패했습니다.");
-			
 		}
-		
 	}
 	
-	
+	public void deleteMember(String userId) {
+		int result = new MemberDao().deleteMember(userId);
+		
+		if(result >0) { //성공
+			new MainMenu().displaySuccess("회원정보를 성공적으로 삭제했습니다.");
+		} else { //실패
+			new MainMenu().displayFail("회원정보 삭제에 실패했습니다.");
+		}
+	}
 
 
 }

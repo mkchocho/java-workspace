@@ -25,7 +25,7 @@ public class MemberDao {
 		Connection conn = null;
 		Statement  stmt = null;
 		
-		String sql = "INSERT INTO MEMBER VALUES(SEQ_UNO.NEXTVAL, '"+ m.getUserId()  + "', "
+		String sql = "INSERT INTO MEMBER VALUES(SEQ_USERNO.NEXTVAL, '"+ m.getUserId()  + "', "
 															  + "'"+ m.getUserPwd() + "', "
 															  + "'"+ m.getUserName() + "', "
 															  + "'"+ m.getGender() + "', "
@@ -34,7 +34,7 @@ public class MemberDao {
 															  + "'"+ m.getPhone() + "', "
 															  + "'"+ m.getAddress() + "', "
 															  + "'"+ m.getHobby() + "', SYSDATE)";
-						
+		System.out.println(sql);				
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			
@@ -276,8 +276,49 @@ public class MemberDao {
 				e.printStackTrace();
 			}
 		}
-		
 		return result;
 	}
+	
+	
+	public int deleteMember(String userId) {
+		int result = 0;
+		
+		Connection conn = null;
+		Statement stmt = null;
+		
+		String sql = "DELETE FROM MEMBER"
+				+" WHERE USER_ID ='" + userId +"'";
+		
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "JDBC", "JDBC");
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+			
+			if(result > 0) { //성공
+				conn.commit();
+			} else {
+				conn.rollback();
+			}
+					
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	
 }
