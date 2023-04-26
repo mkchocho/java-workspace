@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import com.goodee.model.vo.Member;
+import com.goodee.model.vo.Book;
 
 public class MemberDao {
 
@@ -49,7 +49,7 @@ public class MemberDao {
  * 		
  */
 	
-	public int insertMember(Member m) {
+	public int insertMember(Book m) {
 		
 		int result = 0;
 		
@@ -116,8 +116,8 @@ public class MemberDao {
 	}
 	
 	// 전체 회원을 조회하는 메서드
-	public ArrayList<Member> selectList() {
-		ArrayList<Member> list = new ArrayList<>();
+	public ArrayList<Book> selectList() {
+		ArrayList<Book> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement  pstmt = null;
@@ -132,7 +132,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Member m = new Member();
+				Book m = new Book();
 				
 				// rset에서 user_no컬럼을 읽어서 m객체의 setter(setUserNo)를 이용하여 입력
 				m.setUserNo(rset.getInt("user_no"));  
@@ -172,8 +172,8 @@ public class MemberDao {
 	}
 	
 	// 회원 아이디로 검색 요청시 조회하는 메서드
-	public Member selectByUserId(String userId) {
-		Member m = null;
+	public Book selectByUserId(String userId) {
+		Book m = null;
 		
 		
 		Connection conn = null;
@@ -191,7 +191,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member();
+				m = new Book();
 				
 				// rset에서 user_no컬럼을 읽어서 m객체의 setter(setUserNo)를 이용하여 입력
 				m.setUserNo(rset.getInt("user_no"));  
@@ -229,8 +229,8 @@ public class MemberDao {
 		return m;
 	}	
 	
-	public ArrayList<Member> selectByUserName(String keyword) {
-		ArrayList<Member> list = new ArrayList<>();
+	public ArrayList<Book> selectByUserName(String keyword) {
+		ArrayList<Book> list = new ArrayList<>();
 		
 		Connection conn = null;
 		PreparedStatement  pstmt = null;
@@ -256,7 +256,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				Member m = new Member();
+				Book m = new Book();
 				
 				// rset에서 user_no컬럼을 읽어서 m객체의 setter(setUserNo)를 이용하여 입력
 				m.setUserNo(rset.getInt("user_no"));  
@@ -296,7 +296,7 @@ public class MemberDao {
 	}
 	
 	// Controller에서 요청하는 회원정보 변경을 수행하는 메서드
-	public int updateMember(Member m) {
+	public int updateMember(Book m) {
 		int result = 0;
 
 		Connection conn = null;
@@ -388,8 +388,8 @@ public class MemberDao {
 	}
 	
 	// 회원 아이디와 비밀번호를 이용해서 해당 회원이 존재하는지 데이터베이스를 조회하는 메서드
-	public Member loginMember(String userId,String userPwd) {
-		Member m = null;
+	public Book loginMember(String userId,String userPwd) {
+		Book m = null;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -408,7 +408,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			if(rset.next()) {
-				m = new Member();
+				m = new Book();
 				
 				m.setUserNo(rset.getInt("user_no"));
 				m.setUserId(rset.getString("user_id"));

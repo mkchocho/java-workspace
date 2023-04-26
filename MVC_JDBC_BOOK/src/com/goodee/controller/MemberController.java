@@ -3,7 +3,7 @@ package com.goodee.controller;
 import java.util.ArrayList;
 
 import com.goodee.model.dao.MemberDao;
-import com.goodee.model.vo.Member;
+import com.goodee.model.vo.Book;
 import com.goodee.view.MainMenu;
 
 public class MemberController {
@@ -21,7 +21,7 @@ public class MemberController {
 			                 String gender,String age,String email,
 			                 String phone, String address,String hobby) {
 		
-		Member m = new Member(userId,userPwd,userName,gender,Integer.parseInt(age)
+		Book m = new Book(userId,userPwd,userName,gender,Integer.parseInt(age)
 				                ,email,phone,address,hobby);
 		
 		int result = new MemberDao().insertMember(m);
@@ -36,7 +36,7 @@ public class MemberController {
 	 * 회원전체를 조회요청을 처리하는 메서드
 	 */
 	public void selectList() {
-		ArrayList<Member> list = new MemberDao().selectList();
+		ArrayList<Book> list = new MemberDao().selectList();
 		
 		if(list.isEmpty()) { // 리스트가 비어있을 경우 => 조회된 결과 없음.
 			new MainMenu().displayNoData("조회 결과 데이터가 없습니다.");
@@ -49,7 +49,7 @@ public class MemberController {
 	// 회원 아이디로 검색 요청을 처리하는 메서드
 	// @param : userId : 사용자가 입력해서 검색하고자 하는 회원 아이디값
 	public void selectById(String userId) {
-		Member m = new MemberDao().selectByUserId(userId);
+		Book m = new MemberDao().selectByUserId(userId);
 		
 		if(m == null) {
 			new MainMenu().displayNoData(userId + "에 대한 조회결과가 없습니다.");
@@ -60,7 +60,7 @@ public class MemberController {
 	
 	public void selectByName(String userName) {
 //		Member m = new MemberDao().selectByUserName(userName);
-		ArrayList<Member> list = new MemberDao().selectByUserName(userName);
+		ArrayList<Book> list = new MemberDao().selectByUserName(userName);
 		
 		
 		if(list.isEmpty()) {
@@ -73,7 +73,7 @@ public class MemberController {
 	// 회원 정보 변경 요청을 처리할 메서드 
 	// @param : userId, userPwd, email, phone, addree
 	public void updateMember(String userId,String userPwd,String email,String phone,String address) {
-		Member m = new Member();
+		Book m = new Book();
 		m.setUserId(userId);
 		m.setUserPwd(userPwd);
 		m.setEmail(email);
@@ -99,7 +99,7 @@ public class MemberController {
 	}
 	
 	public void loginMember(String userId, String userPwd) {
-		Member m = new MemberDao().loginMember(userId,userPwd);
+		Book m = new MemberDao().loginMember(userId,userPwd);
 		
 		if(m == null) {
 			new MainMenu().displayFail("로그인 실패");

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.goodee.controller.MemberController;
-import com.goodee.model.vo.Member;
+import com.goodee.model.vo.Book;
 
 
 public class MainMenu {
@@ -22,16 +22,11 @@ public class MainMenu {
 	public void mainMenu() {
 		
 		while(true) {
-			System.out.println("\n==회원 관리 프로그램==");
-			System.out.println("1. 회원 추가");
-			System.out.println("2. 회원 전체 조회");
-			System.out.println("3. 회원 아이디 검색");
-			System.out.println("4. 키워드 검색(회원아이디 또는 회원이름)");
-			System.out.println("5. 회원 정보 변경");
-			System.out.println("6. 회원 탈퇴");
-			System.out.println("7. 로그인");
+			System.out.println("\n==도서 관리 프로그램==");
+			System.out.println("1. 도서 추가");
+			System.out.println("2. 전체 도서 조회");
+			System.out.println("3. 도서삭제");
 			System.out.println("0. 프로그램 종료");
-			
 			System.out.println(">> 메뉴 선택 : ");
 			int menu = sc.nextInt();
 			sc.nextLine();
@@ -144,15 +139,15 @@ public class MainMenu {
 	}
 	
 	// 조회 서비스 요청 처리 후 조회결과가 여러개일 경우 사용자가 보게될 화면
-	public void displayMemberList(ArrayList<Member> list) {
+	public void displayMemberList(ArrayList<Book> list) {
 		System.out.println("\n조회된 데이터는 다음과 같습니다.\n");
 		
-		for(Member m: list) {
+		for(Book m: list) {
 			System.out.println(m);
 		}
 	}
 	
-	public void displayMember(Member m) {
+	public void displayMember(Book m) {
 		System.out.println("\n조회된 데이터는 다음과 같습니다.");
 		System.out.println(m);
 	}
