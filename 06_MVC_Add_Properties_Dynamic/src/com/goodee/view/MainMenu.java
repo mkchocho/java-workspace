@@ -4,6 +4,8 @@ package com.goodee.view;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.lang.model.type.NullType;
+
 import com.goodee.controller.MemberController;
 import com.goodee.model.vo.Member;
 
@@ -30,6 +32,7 @@ public class MainMenu {
 			System.out.println("5. 회원 정보 변경");
 			System.out.println("6. 회원 탈퇴");
 			System.out.println("7. 로그인");
+			System.out.println("8. 인적사항 조회 "); 
 			System.out.println("0. 프로그램 종료");
 			
 			System.out.println(">> 메뉴 선택 : ");
@@ -44,6 +47,7 @@ public class MainMenu {
 			case 5: updateMember(); break;   // 현재 클래스에서 처리 
 			case 6: mc.deleteMember(inputMemberId()); break;   // Controll 패키지에 있는 클래스에 처리
 			case 7: loginMember(); break;  // 회원 아이디와 비밀번호를 입력받는 메서드 호출
+			case 8 : selectProfile(); break; // 회원 인적정보 조회를 위해 아이디와 패스워드를 입력받는 메서드 호출
 			case 0: System.out.println("이용해 주셔서 감사합니다."); return;
 			default : System.out.println("메뉴를 잘못입력했습니다. 다시 입력해주세요.");
 			}
@@ -117,6 +121,17 @@ public class MainMenu {
 		mc.updateMember(userId,userPwd,email,phone,address);
 	}
 	
+	
+	public void selectProfile( ) {
+		System.out.println("\n=======인적사항=======");
+		String userId = inputMemberId();
+
+		System.out.println("회원 비밀번호 입력 : ");
+		String userPwd = sc.nextLine();
+		
+		mc.selectProfile(userId,userPwd);
+	}
+	
 	public void loginMember() {
 		System.out.println("\n=====로그인=====");
 		String userId = inputMemberId();
@@ -155,6 +170,28 @@ public class MainMenu {
 	public void displayMember(Member m) {
 		System.out.println("\n조회된 데이터는 다음과 같습니다.");
 		System.out.println(m);
+	}
+	
+	public void displayProfile(Member m) {
+		System.out.println("\n=======회원 정보=======");
+		
+		System.out.println("이  름   : "+m.getUserName());
+		System.out.println("이메일   : "+m.getEmail() == null ? "없음" : m.getEmail());
+		System.out.println("전화번호 : "+m.getPhone());
+		System.out.println("주  소   : "+m.getAddress());
+		
+		if(m.getHobby() != null) {
+			String[] hobby = m.getHobby().split(",");
+			
+			System.out.print("취  미 : ");
+			for(String s : hobby) {
+				System.out.print(s + " ");
+			}
+		} else { 
+			System.out.println("취  미  : 없음");
+		}
+		
+		
 	}
 	
 }

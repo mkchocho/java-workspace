@@ -1,23 +1,38 @@
 package com.goodee.model.dao;
 
+import static com.goodee.common.JDBCTemplate.close;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
-
-import static com.goodee.common.JDBCTemplate.getConnection;
-import static com.goodee.common.JDBCTemplate.close;
-import static com.goodee.common.JDBCTemplate.commit;
-import static com.goodee.common.JDBCTemplate.rollback;
+import java.util.InvalidPropertiesFormatException;
+import java.util.Properties;
 
 import com.goodee.common.JDBCTemplate;
 import com.goodee.model.vo.Member;
 
 
 public class MemberDao {
+	
+	private Properties prop = new Properties();
+	
+	//사용자가 어떤 서비스를 요청할 때마다 매번 new MemberDao().xxx();
+	//즉, 서비스를 요청할 때마다 매번 다음의 기본 생성자가 실행됨.
+	
+	public MemberDao() {
+		
+		try {
+			prop.loadFromXML(new FileInputStream("resources/sql.xml"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 /*
  * DAO(Data Access Object)
@@ -58,7 +73,7 @@ public class MemberDao {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		
-		String sql = "INSERT INTO MEMBER VALUES(SEQ_UNO.NEXTVAL,?,?,?,?,?,?,?,?,?,SYSDATE)";		
+		String sql = prop.getProperty("insertMember");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -92,10 +107,9 @@ public class MemberDao {
 		PreparedStatement  pstmt = null;
 		ResultSet  rset = null;
 		
-		String sql = "SELECT * FROM MEMBER";
+		String sql = prop.getProperty("selectList");
 	
 		try {
-			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
 			
@@ -329,6 +343,42 @@ public class MemberDao {
 			JDBCTemplate.close(rset);
 			JDBCTemplate.close(pstmt);
 		}
+		return m;
+	}
+	
+	public Member selectProfile(Connection conn, String userId, String userPwd) {
+		
+		Member m = null;
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectProfile");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1,userId);
+			pstmt.setString(2,userPwd);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member();
+				m.setUserName(rset.getString("user_name"));
+				m.setEmail(rset.getString("email"));
+				m.setAddress(rset.getString("address"));;
+				m.setPhone(rset.getString("phone"));
+				m.setHobby(rset.getString("hobby"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+			
+		}
+		
 		return m;
 	}
 }

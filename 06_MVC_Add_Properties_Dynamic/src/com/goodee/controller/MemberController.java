@@ -2,7 +2,6 @@ package com.goodee.controller;
 
 import java.util.ArrayList;
 
-import com.goodee.model.dao.MemberDao;
 import com.goodee.model.service.MemberService;
 import com.goodee.model.vo.Member;
 import com.goodee.view.MainMenu;
@@ -110,4 +109,16 @@ public class MemberController {
 			new MainMenu().displaySuccess(m.getUserName()+"님, 환영합니다.");
 		}
 	}
+	
+	public void selectProfile(String userId, String userPwd) {
+		Member m = new MemberService().selectProfile(userId, userPwd);
+		
+		if(m == null) { // 조회된 회원 없음.
+			new MainMenu().displayFail("아이디 또는 패스워드가 틀렸습니다.");
+		} else { // 조회된 회원 있음.
+			new MainMenu().displayProfile(m);
+		}
+	
+	}
+	
 }
