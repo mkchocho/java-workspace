@@ -80,12 +80,7 @@ public class MemberDao {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} finally {
-			try {
-				pstmt.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}				
+				JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
