@@ -1,0 +1,22 @@
+C:\Users\GDJ>sqlplus / as sysdba
+
+SQL> conn / as sysdba;
+
+SQL> create user DBADMIN identified by java1234;
+
+SQL> grant connect , resource to DBADMIN;
+
+
+
+상품추가
+INSERT INTO PRODUCT VALUES PRODUCT_ID, PNAME, PRICE, DESCRIPTION, STOCK;
+전체회원 조회
+SELECT * FROM PRODUCT;
+상품명으로 검색
+SELECT * FROM PRODUCT WHERE P_NAME = PNAME;
+상품 변경
+UPDATE PRODUCT SET PRICE = ?,"
+				+       "    DESCRIPTION = ?"
+				+     "WHERE PRODUCT_ID = ?";
+상품삭제
+String sql = "DELETE FROM PRODUCT WHERE PRODUCT_ID = ?";

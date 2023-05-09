@@ -1,0 +1,4 @@
+C:\Users\GDJ>sqlplus / as sysdba
+SQL> conn / as sysdba;
+SQL> create user DBADMIN identified by java1234;
+SQL> grant connect , resource to DBADMIN;
