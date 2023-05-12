@@ -172,6 +172,28 @@ Material Icon Theme
 Multiple cursor case preserve
 Prettier - Code formatter
 html tag wrapper
+---------------------------------------------------------------------
+
+jsp-api.jar / 엔진 혹은 컨테이너 / 압축을 풀면 클래스가 있음 
+			↓
+- 여기서만들어짐 : 약속 -> 메서드 오버라이딩 / 상속관계
+init()
+servlet()
+destoy()
+=>초기화 servlet lifecyle : 서블릿을 실행시킬때 → 브라우저에 요청(리퀘스트) url
+
+ex
+로그인
+id ->입력  	→ 입력한 정보가 Tomcat 서버를 통과함 → 오라클서버(DB)
+pw ->입력		
+
+	WHERE 절에 ID=ture and PW=true -> 교집합
+	지역변수처리
+	LoginDao 
+	1초에 1350명이 평균적으로 입장한다고 하면 인스턴스화 한걸 1350개 가지고 있어야 하는가?
+	하나의 객체를 가지고 서비스를 하는 것 싱글톤 / 서블릿은 싱글톤임
+	하나의 객체를 가지고 아이디와 비밀번호값이 달라지기 때문에 지역변수처리 해야함 
+
 ─────────────────────────────────────────────────────────────
 https://www.postman.com/
 가입
