@@ -177,9 +177,9 @@ html tag wrapper
 jsp-api.jar / 엔진 혹은 컨테이너 / 압축을 풀면 클래스가 있음 
 			↓
 - 여기서만들어짐 : 약속 -> 메서드 오버라이딩 / 상속관계
-init()
-servlet()
-destoy()
+init() 초기화
+servlet() 서비스
+destoy() 닫음
 =>초기화 servlet lifecyle : 서블릿을 실행시킬때 → 브라우저에 요청(리퀘스트) url
 
 ex
